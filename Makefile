@@ -51,7 +51,8 @@ build: $(NIXPROF_DIR) nix/common.nix nix/creative.nix nix/dev.nix
 	nix-env --profile $< -i -f nix/common.nix
 	nix-env --profile $< -i -f nix/creative.nix
 	nix-env --profile $< -i -f nix/dev.nix
+	nix-env --profile $< -i -f nix/tools.nix
 	
 lint:
-	nixpkgs-fmt --check nix/
+	nixpkgs-fmt nix/
 
