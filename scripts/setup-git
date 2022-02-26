@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -eu
+
+set_identity() {
+	array=( user.name user.email )
+	for setting in "${array[@]}"
+	do
+	  echo "$setting?"
+	  read value
+	  git config --global $setting "$value"
+	done
+}
+
+set_misc() {
+  git config --global init.defaultBranch main
+  git config --global --add merge.ff false
+}
+
+set_identity
+set_misc
+
+echo "Current settings:" && git config --list
