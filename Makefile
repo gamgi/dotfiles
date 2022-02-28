@@ -4,7 +4,7 @@ BASHRCC_FILE := $(HOME)/.bashrc
 NIXCONF_FILE := $(HOME)/.config/nix/nix.conf
 NIXPKGC_FILE := $(HOME)/.config/nixpkgs/config.nix
 USERLOC_DIR  := $(HOME)/.local
-NIXPROF_DIR  := /nix/var/nix/profiles/per-user/$(USER)/testing
+NIXPROF_DIR  := /nix/var/nix/profiles/per-user/$(USER)/default
 TAG=\# managed by dotfiles
 
 .PHONY: help build lint uninstall install install-nix install-scripts
