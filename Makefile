@@ -24,7 +24,7 @@ uninstall: ## Uninstall
 	# clean up config.nix
 	sed -i "/$(TAG)$$/d" $(NIXPKGC_FILE)
 
-install: install-scripts install-nix ## Install
+install: install-scripts install-nix install-other  ## Install
 
 install-other:
 	# bash prompt with git branch
@@ -39,7 +39,7 @@ install-nix:
 	echo "experimental-features = nix-command flakes $(TAG)" >> $(NIXCONF_FILE)
 	
 	# add nix profile .desktop files to application launcher
-	echo "export XDG_DATA_DIRS=\"~/.nix-profile/share/applications:\$\$$XDG_DATA_DIRS\" $(TAG)" >> $(PROFILE_FILE)
+	echo "export XDG_DATA_DIRS=\"~/.nix-profile/share:\$\$$XDG_DATA_DIRS\" $(TAG)" >> $(PROFILE_FILE)
 	
 	# allow unfree
 	@if [ -f "$(NIXPKGC_FILE)" ]; then \
@@ -56,11 +56,17 @@ install-scripts: scripts/devbox
 	# link scripts to ~/.local/bin/
 	ln -s "$$PWD/scripts/devbox" "$(DESTDIR)$(USERLOC_DIR)/bin/devbox"
 
-build: $(NIXPROF_DIR) nix/common.nix nix/creative.nix nix/dev.nix
+$(NIXPROF_DIR):
+	nix-env --profile $(NIXPROF_DIR) -i nix
+
+build: $(NIXPROF_DIR) nix/common.nix nix/creative.nix nix/dev.nix nix/tools.nix nix/messaging.nix nix/convenience.nix ## Build nix profile
 	nix-env --profile $< -i -f nix/common.nix
 	nix-env --profile $< -i -f nix/creative.nix
 	nix-env --profile $< -i -f nix/dev.nix
 	nix-env --profile $< -i -f nix/tools.nix
+	nix-env --profile $< -i -f nix/messaging.nix
+	nix-env --profile $< -i -f nix/convenience.nix
+	nix-env --profile $< -i -f nix/office.nix
 	
 lint:
 	nixpkgs-fmt nix/

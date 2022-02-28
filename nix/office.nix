@@ -4,11 +4,8 @@ let
 
 in
 buildEnv {
-  name = "my-creative";
+  name = "my-office";
   paths = with pkgs; [
-    gimp
-    inkscape
-    imagemagick
-    ffmpeg
+    libreoffice
   ];
 }

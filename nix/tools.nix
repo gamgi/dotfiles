@@ -7,6 +7,7 @@ buildEnv {
   name = "my-tools";
   paths = with pkgs; [
     jq
+    feh
   ];
   pathsToLink = [ "/share" "/bin" ];
 }

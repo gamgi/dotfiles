@@ -4,11 +4,9 @@ let
 
 in
 buildEnv {
-  name = "my-creative";
+  name = "my-messaging";
   paths = with pkgs; [
-    gimp
-    inkscape
-    imagemagick
-    ffmpeg
+    discord
   ];
+  pathsToLink = [ "/share" "/bin" ];
 }
