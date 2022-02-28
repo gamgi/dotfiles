@@ -1,5 +1,6 @@
 PREFIX=/usr/local
 PROFILE_FILE := $(HOME)/.profile
+BASHRCC_FILE := $(HOME)/.bashrc
 NIXCONF_FILE := $(HOME)/.config/nix/nix.conf
 NIXPKGC_FILE := $(HOME)/.config/nixpkgs/config.nix
 USERLOC_DIR  := $(HOME)/.local
@@ -15,6 +16,7 @@ uninstall: ## Uninstall
 	# clean up .profile
 	sed -i "/$(TAG)$$/d" $(PROFILE_FILE)
 	sed -i "/$(TAG)$$/d" $(NIXCONF_FILE)
+	sed -i "/$(TAG)$$/d" $(BASHRCC_FILE)
 	
 	# remove script links
 	rm "$(DESTDIR)$(USERLOC_DIR)/bin/devbox" || true
@@ -23,6 +25,13 @@ uninstall: ## Uninstall
 	sed -i "/$(TAG)$$/d" $(NIXPKGC_FILE)
 
 install: install-scripts install-nix ## Install
+
+install-other:
+	# bash prompt with git branch
+	echo 'parse_git_branch() { git branch 2> /dev/null | sed -e' \
+	"'/^[^*]/d' -e 's/* \(.*\)/(\\\1)/';" \
+	"} $(TAG)" >> $(BASHRCC_FILE)
+	echo "export PS1=\"\\u@\\h \\[\\\e[32m\\]\\w \\[\\\e[91m\\]\\\$$(parse_git_branch)\\[\\\e[00m\\]$$ \" $(TAG)" >> $(BASHRCC_FILE)
 
 install-nix:
 	# enable experimental nix features
