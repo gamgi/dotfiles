@@ -24,6 +24,10 @@ uninstall: ## Uninstall
 	
 	# clean up config.nix
 	sed -i "/$(TAG)$$/d" $(NIXPKGC_FILE)
+	
+	# remove nix to pop_os link
+	rm -r "$(USERLOC_DIR)/share/applications"
+	mkdir -p "$(USERLOC_DIR)/share/applications"
 
 install: install-scripts install-nix install-other  ## Install
 
@@ -53,6 +57,11 @@ install-nix:
 	else \
 	  echo -e "{\nallowUnfree = true; $(TAG)\n}" > $(NIXPKGC_FILE); \
 	fi
+	
+	# enable applications to show up in pop_os launcher
+	# seems XDG_DATA_DIR is ignored https://github.com/pop-os/shell/issues/1224
+	rm -r "$(USERLOC_DIR)/share/applications"
+	ln -s ~/.nix-profile/share/applications "$(USERLOC_DIR)/share/applications"
 
 install-scripts: scripts/devbox
 	mkdir -p "$(DESTDIR)$(USERLOC_DIR)/bin"
