@@ -20,3 +20,5 @@ set_identity
 set_misc
 
 echo "Current settings:" && git config --list
+
+echo "Recommended: set up ssh keys now."

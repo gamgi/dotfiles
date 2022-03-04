@@ -4,10 +4,11 @@ BASHRCC_FILE := $(HOME)/.bashrc
 NIXCONF_FILE := $(HOME)/.config/nix/nix.conf
 NIXPKGC_FILE := $(HOME)/.config/nixpkgs/config.nix
 USERLOC_DIR  := $(HOME)/.local
+VSCOUSR_DIR  := $(HOME)/.config/VSCodium/User
 NIXPROF_DIR  := /nix/var/nix/profiles/per-user/$(USER)/default
 TAG=\# managed by dotfiles
 
-.PHONY: help build lint uninstall install install-nix install-scripts
+.PHONY: help nix lint uninstall install install-nix install-scripts
 
 help: ## Display this help
 	@grep -E '^[ a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "%-30s %s\n", $$1, $$2}'
@@ -26,12 +27,16 @@ uninstall: ## Uninstall
 
 install: install-scripts install-nix install-other  ## Install
 
-install-other:
+install-other: other/settings.json other/keybindings.json
 	# bash prompt with git branch
 	echo 'parse_git_branch() { git branch 2> /dev/null | sed -e' \
 	"'/^[^*]/d' -e 's/* \(.*\)/(\\\1)/';" \
 	"} $(TAG)" >> $(BASHRCC_FILE)
 	echo "export PS1=\"\\u@\\h \\[\\\e[32m\\]\\w \\[\\\e[91m\\]\\\$$(parse_git_branch)\\[\\\e[00m\\]$$ \" $(TAG)" >> $(BASHRCC_FILE)
+
+	# vscodium config (sas not able to nixify easily)
+	cp other/settings.json $(VSCOUSR_DIR)
+	cp other/keybindings.json $(VSCOUSR_DIR)
 
 install-nix:
 	# enable experimental nix features
@@ -49,7 +54,6 @@ install-nix:
 	  echo -e "{\nallowUnfree = true; $(TAG)\n}" > $(NIXPKGC_FILE); \
 	fi
 
-	
 install-scripts: scripts/devbox
 	mkdir -p "$(DESTDIR)$(USERLOC_DIR)/bin"
 	
@@ -59,7 +63,8 @@ install-scripts: scripts/devbox
 $(NIXPROF_DIR):
 	nix-env --profile $(NIXPROF_DIR) -i nix
 
-build: $(NIXPROF_DIR) nix/common.nix nix/creative.nix nix/dev.nix nix/tools.nix nix/messaging.nix nix/convenience.nix ## Build nix profile
+
+nix: $(NIXPROF_DIR) $(wildcard nix/*.nix) ## Build nix profile
 	nix-env --profile $< -i -f nix/common.nix
 	nix-env --profile $< -i -f nix/creative.nix
 	nix-env --profile $< -i -f nix/dev.nix
