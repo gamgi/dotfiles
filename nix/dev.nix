@@ -12,5 +12,8 @@ buildEnv {
     # docker via system
     #pkgs-vscode.vscode-with-extensions
     pkgs-vscodium.vscodium-with-extensions
+    terraform
+    insomnia
   ];
 }
+

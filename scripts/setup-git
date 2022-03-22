@@ -13,7 +13,7 @@ set_identity() {
 
 set_misc() {
   git config --global init.defaultBranch main
-  git config --global --add merge.ff false
+  git config --global pull.ff only
 }
 
 set_identity

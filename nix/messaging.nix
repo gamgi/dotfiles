@@ -6,7 +6,7 @@ in
 buildEnv {
   name = "my-messaging";
   paths = with pkgs; [
-    discord
+    # discord
   ];
   pathsToLink = [ "/share" "/bin" ];
 }
