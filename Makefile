@@ -6,6 +6,7 @@ NIXPKGC_FILE := $(HOME)/.config/nixpkgs/config.nix
 USERLOC_DIR  := $(HOME)/.local
 VSCOUSR_DIR  := $(HOME)/.config/VSCodium/User
 NIXPROF_DIR  := /nix/var/nix/profiles/per-user/$(USER)/default
+FFDESKT_FILE := /usr/share/applications/firefox.desktop
 TAG=\# managed by dotfiles
 
 .PHONY: help nix lint uninstall install install-nix install-scripts
@@ -15,15 +16,17 @@ help: ## Display this help
 
 uninstall: ## Uninstall
 	# clean up .profile
-	sed -i "/$(TAG)$$/d" $(PROFILE_FILE)
-	sed -i "/$(TAG)$$/d" $(NIXCONF_FILE)
-	sed -i "/$(TAG)$$/d" $(BASHRCC_FILE)
+	sed -i "/$(TAG)$$/d" $(PROFILE_FILE) || true
+	sed -i "/$(TAG)$$/d" $(NIXCONF_FILE) || true
+	sed -i "/$(TAG)$$/d" $(BASHRCC_FILE) || true
+	sed -i "/$(TAG)$$/d" $(PROFILE_FILE) || true
+	sed -i "/$(TAG)$$/d" $(FFDESKT_FILE) || true
 	
 	# remove script links
 	rm "$(DESTDIR)$(USERLOC_DIR)/bin/devbox" || true
 	
 	# clean up config.nix
-	sed -i "/$(TAG)$$/d" $(NIXPKGC_FILE)
+	sed -i "/$(TAG)$$/d" $(NIXPKGC_FILE) || true
 	
 	# remove nix to pop_os link
 	rm -r "$(USERLOC_DIR)/share/applications"
@@ -33,14 +36,19 @@ install: install-scripts install-nix install-other  ## Install
 
 install-other: other/settings.json other/keybindings.json
 	# bash prompt with git branch
-	echo 'parse_git_branch() { git branch 2> /dev/null | sed -e' \
+	echo 'parse_git_branch() { git branch 2> /dev/null | sed -e ' \
 	"'/^[^*]/d' -e 's/* \(.*\)/(\\\1)/';" \
 	"} $(TAG)" >> $(BASHRCC_FILE)
-	echo "export PS1=\"\\u@\\h \\[\\\e[32m\\]\\w \\[\\\e[91m\\]\\\$$(parse_git_branch)\\[\\\e[00m\\]$$ \" $(TAG)" >> $(BASHRCC_FILE)
+	echo "export PS1=\"\\u@\\h \\[\\\e[32m\\]\\w\\[\\\e[91m\\]\\\$$(parse_git_branch)\\[\\\e[00m\\] $$ \" $(TAG)" >> $(BASHRCC_FILE)
 
 	# vscodium config (sas not able to nixify easily)
+	mkdir -p "$(VSCOUSR_DIR)/share/applications"
 	cp other/settings.json $(VSCOUSR_DIR)
 	cp other/keybindings.json $(VSCOUSR_DIR)
+	
+	# set firefox gtk theme
+	sudo sed -i -- 's/^Exec=firefox %u$$/Exec=bash -c "GTK_THEME=\\" \\" firefox %u"/' /usr/share/applications/firefox.desktop
+	
 
 install-nix:
 	# enable experimental nix features
@@ -55,7 +63,8 @@ install-nix:
 	  echo "$(NIXPKGC_FILE) already exists, modifying."; \
 	  sed -n -i 'p;1a allowUnfree = true; $(TAG)' $(NIXPKGC_FILE); \
 	else \
-	  echo -e "{\nallowUnfree = true; $(TAG)\n}" > $(NIXPKGC_FILE); \
+	  mkdir -p "$$(dirname $(NIXPKGC_FILE))"; \
+	  echo "{\nallowUnfree = true; $(TAG)\n}" > $(NIXPKGC_FILE); \
 	fi
 	
 	# enable applications to show up in pop_os launcher
