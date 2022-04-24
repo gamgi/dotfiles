@@ -1,10 +1,16 @@
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Linux)
+VSCOUSR_DIR  := $(HOME)/.config/VSCodium/User
+endif
+ifeq ($(UNAME_S),Darwin)
+VSCOUSR_DIR  := $(HOME)/Library/Application Support/Code/User
+endif
 PREFIX=/usr/local
 PROFILE_FILE := $(HOME)/.profile
 BASHRCC_FILE := $(HOME)/.bashrc
 NIXCONF_FILE := $(HOME)/.config/nix/nix.conf
 NIXPKGC_FILE := $(HOME)/.config/nixpkgs/config.nix
 USERLOC_DIR  := $(HOME)/.local
-VSCOUSR_DIR  := $(HOME)/.config/VSCodium/User
 NIXPROF_DIR  := /nix/var/nix/profiles/per-user/$(USER)/default
 FFDESKT_FILE := /usr/share/applications/firefox.desktop
 TAG=\# managed by dotfiles
@@ -56,7 +62,9 @@ install-nix:
 	echo "experimental-features = nix-command flakes $(TAG)" >> $(NIXCONF_FILE)
 	
 	# add nix profile .desktop files to application launcher
-	echo "export XDG_DATA_DIRS=\"~/.nix-profile/share:\$\$$XDG_DATA_DIRS\" $(TAG)" >> $(PROFILE_FILE)
+ifeq ($(UNAME_S),Linux)
+	  echo "export XDG_DATA_DIRS=\"~/.nix-profile/share:\$\$$XDG_DATA_DIRS\" $(TAG)" >> $(PROFILE_FILE)
+endif
 	
 	# allow unfree
 	@if [ -f "$(NIXPKGC_FILE)" ]; then \
@@ -69,8 +77,8 @@ install-nix:
 	
 	# enable applications to show up in pop_os launcher
 	# seems XDG_DATA_DIR is ignored https://github.com/pop-os/shell/issues/1224
-	rm -r "$(USERLOC_DIR)/share/applications"
-	ln -s ~/.nix-profile/share/applications "$(USERLOC_DIR)/share/applications"
+	# rm -r "$(USERLOC_DIR)/share/applications"
+	# ln -s ~/.nix-profile/share/applications "$(USERLOC_DIR)/share/applications"
 
 install-scripts: scripts/devbox
 	mkdir -p "$(DESTDIR)$(USERLOC_DIR)/bin"
@@ -83,13 +91,15 @@ $(NIXPROF_DIR):
 
 
 nix: $(NIXPROF_DIR) $(wildcard nix/*.nix) ## Build nix profile
-	nix-env --profile $< -i -f nix/common.nix
-	nix-env --profile $< -i -f nix/creative.nix
-	nix-env --profile $< -i -f nix/dev.nix
+ifeq ($(UNAME_S),Linux)
+	nix-env --profile $< -i -f nix/common-linux.nix
+	nix-env --profile $< -i -f nix/dev-linux.nix
+	nix-env --profile $< -i -f nix/office-linux.nix
+	nix-env --profile $< -i -f nix/creative-linux.nix
+	nix-env --profile $< -i -f nix/convenience-linux.nix
+endif
 	nix-env --profile $< -i -f nix/tools.nix
 	nix-env --profile $< -i -f nix/messaging.nix
-	nix-env --profile $< -i -f nix/convenience.nix
-	nix-env --profile $< -i -f nix/office.nix
 	
 lint:
 	nixpkgs-fmt nix/
