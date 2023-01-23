@@ -98,6 +98,9 @@ ifeq ($(UNAME_S),Linux)
 	nix-env --profile $< -i -f nix/creative-linux.nix
 	nix-env --profile $< -i -f nix/convenience-linux.nix
 endif
+ifeq ($(UNAME_S),Darwin)
+	nix-env --profile $< -i -f nix/dev-macos.nix
+endif
 	nix-env --profile $< -i -f nix/tools.nix
 	nix-env --profile $< -i -f nix/messaging.nix
 	

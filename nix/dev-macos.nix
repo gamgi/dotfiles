@@ -4,12 +4,16 @@ let
 
 in
 buildEnv {
-  name = "my-tools";
+  name = "my-dev";
   paths = with pkgs; [
-    jq
-    feh
-    nmap
-    visidata
+    # act
+    tree
+    # dnsmasq
+    gpgme
+    gawk
+    autoconf
+    libxslt
+    fop
   ];
-  pathsToLink = [ "/share" "/bin" ];
 }
+
