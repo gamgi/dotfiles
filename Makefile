@@ -1,4 +1,6 @@
+SHELL := /bin/bash
 UNAME_S := $(shell uname -s)
+
 ifeq ($(UNAME_S),Linux)
 VSCOUSR_DIR  := $(HOME)/.config/VSCodium/User
 endif
@@ -15,7 +17,7 @@ NIXPROF_DIR  := /nix/var/nix/profiles/per-user/$(USER)/default
 FFDESKT_FILE := /usr/share/applications/firefox.desktop
 TAG=\# managed by dotfiles
 
-.PHONY: help nix lint uninstall install install-nix install-scripts
+.PHONY: help nix lint uninstall install setup-nix
 
 help: ## Display this help
 	@grep -E '^[ a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "%-30s %s\n", $$1, $$2}'
@@ -55,16 +57,13 @@ install-other: other/settings.json other/keybindings.json
 	# set firefox gtk theme
 	sudo sed -i -- 's/^Exec=firefox %u$$/Exec=bash -c "GTK_THEME=\\" \\" firefox %u"/' /usr/share/applications/firefox.desktop
 	
-
 install-nix:
+	sh <(curl -L https://nixos.org/nix/install) --daemon
+
+setup-nix:
 	# enable experimental nix features
 	mkdir -p "$$(dirname $(NIXCONF_FILE))"
 	echo "experimental-features = nix-command flakes $(TAG)" >> $(NIXCONF_FILE)
-	
-	# add nix profile .desktop files to application launcher
-ifeq ($(UNAME_S),Linux)
-	  echo "export XDG_DATA_DIRS=\"~/.nix-profile/share:\$\$$XDG_DATA_DIRS\" $(TAG)" >> $(PROFILE_FILE)
-endif
 	
 	# allow unfree
 	@if [ -f "$(NIXPKGC_FILE)" ]; then \
@@ -75,20 +74,17 @@ endif
 	  echo "{\nallowUnfree = true; $(TAG)\n}" > $(NIXPKGC_FILE); \
 	fi
 	
-	# enable applications to show up in pop_os launcher
-	# seems XDG_DATA_DIR is ignored https://github.com/pop-os/shell/issues/1224
-	# rm -r "$(USERLOC_DIR)/share/applications"
-	# ln -s ~/.nix-profile/share/applications "$(USERLOC_DIR)/share/applications"
-
-install-scripts: scripts/devbox
-	mkdir -p "$(DESTDIR)$(USERLOC_DIR)/bin"
-	
-	# link scripts to ~/.local/bin/
-	ln -s "$$PWD/scripts/devbox" "$(DESTDIR)$(USERLOC_DIR)/bin/devbox"
 
 $(NIXPROF_DIR):
 	nix-env --profile $(NIXPROF_DIR) -i nix
 
+
+setup-nix-homemanager:
+	nix build --no-link ./nix/#homeConfigurations.pietu.activationPackage
+	"$$(nix path-info ./nix/#homeConfigurations.pietu.activationPackage)"/activate
+
+switch-homemanager:
+	home-manager switch --flake './nix/#pietu'
 
 nix: $(NIXPROF_DIR) $(wildcard nix/*.nix) ## Build nix profile
 ifeq ($(UNAME_S),Linux)
