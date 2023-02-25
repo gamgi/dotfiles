@@ -86,6 +86,14 @@ setup-nix-homemanager:
 switch-homemanager:
 	home-manager switch --flake './nix/#pietu'
 
+setup-nix-darwin:
+	nix build ./nix/#darwinConfigurations.pietu.system
+	./result/sw/bin/darwin-rebuild switch --flake ./nix/#pietu
+
+	#may have to do
+	#printf 'run\tprivate/var/run\n' | sudo tee -a /etc/synthetic.conf
+	# /System/Library/Filesystems/apfs.fs/Contents/Resources/apfs.util -t
+
 nix: $(NIXPROF_DIR) $(wildcard nix/*.nix) ## Build nix profile
 ifeq ($(UNAME_S),Linux)
 	nix-env --profile $< -i -f nix/common-linux.nix
