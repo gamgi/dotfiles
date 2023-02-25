@@ -8,20 +8,30 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
   home.packages = with pkgs; [
-   git
+    git
+    tmux
+    nixpkgs-fmt
   ];
 
   nixpkgs.config.allowUnfree = true;
 
+  # Raw packages
+
   programs = {
     man.enable = true;
-    vim.enable = true;
   };
+
+  # Raw configuration files
+  # home.file.".vimrc".source = ./vimrc;
 
   programs.git = {
     enable = true;
     userName = "Pietu R";
     userEmail = "pietu_r@gmx.com";
+
+    aliases = {
+      refs = "for-each-ref --sort=-comitterdate refs/heads/";
+    };
   };
 
   programs.ssh = {
@@ -66,8 +76,20 @@
     oh-my-zsh = {
       enable = true;
       plugins = [ "ssh-agent" ];
-      theme = "af-magic";
+      theme = "clean";
     };
   };
-}
 
+  programs.vim = {
+    enable = true;
+    plugins = with pkgs.vimPlugins; [
+      vim-airline
+      vim-nix
+    ];
+    settings = { ignorecase = true; };
+    extraConfig = ''
+      set mouse=a
+      set nu
+    '';
+  };
+}
