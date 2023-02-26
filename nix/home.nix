@@ -77,7 +77,10 @@
       ll = "ls -l";
     };
 
-    # profileExtra = "source $HOME/.cargo/env";
+    profileExtra = ''
+      eval "$(/opt/homebrew/bin/brew shellenv)";
+      # "source $HOME/.cargo/env";
+    '';
 
     history = {
       size = 10000;

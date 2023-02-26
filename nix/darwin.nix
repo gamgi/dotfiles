@@ -8,11 +8,15 @@
   # Homebrew packages
   homebrew = {
     enable = true;
-    onActivation.upgrade = true;
     # updates homebrew packages on activation,
     # can make darwin-rebuild much slower (otherwise i'd forget to do it ever though)
+    onActivation.upgrade = true;
+    brews = [
+      # NOTE: Prefer casks and nixpkgs
+      "openssl@3"
+    ];
     casks = [
-      "iterm2"
+      # "iterm2"
       # "hammerspoon"
       # "amethyst"
       # "alfred"
