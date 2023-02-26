@@ -83,8 +83,11 @@ setup-nix-homemanager:
 	nix build --no-link ./nix/#homeConfigurations.pietu.activationPackage
 	"$$(nix path-info ./nix/#homeConfigurations.pietu.activationPackage)"/activate
 
-switch-homemanager:
+switch-home:
 	home-manager switch --flake './nix/#pietu'
+
+switch-darwin:
+	./result/sw/bin/darwin-rebuild switch --flake ./nix/#pietu
 
 setup-nix-darwin:
 	nix build ./nix/#darwinConfigurations.pietu.system
@@ -93,6 +96,9 @@ setup-nix-darwin:
 	#may have to do
 	#printf 'run\tprivate/var/run\n' | sudo tee -a /etc/synthetic.conf
 	# /System/Library/Filesystems/apfs.fs/Contents/Resources/apfs.util -t
+
+install-homebrew:
+	/bin/bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 nix: $(NIXPROF_DIR) $(wildcard nix/*.nix) ## Build nix profile
 ifeq ($(UNAME_S),Linux)
@@ -108,6 +114,11 @@ endif
 	nix-env --profile $< -i -f nix/tools.nix
 	nix-env --profile $< -i -f nix/messaging.nix
 	
+doctor:
+	ls /Applications/Nix\ Apps
+	ls ~/Applications/Home\ Manager\ Apps
+	ls -l ~/.nix-profile/
+
 lint:
 	nixpkgs-fmt nix/
 

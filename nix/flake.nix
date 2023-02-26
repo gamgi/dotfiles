@@ -18,6 +18,7 @@
     let
       system = "aarch64-darwin";
       pkgs = nixpkgs.legacyPackages.${system};
+      allowUnfree = { nixpkgs.config.allowUnfree = true; };
     in
     {
       homeConfigurations.pietu = home-manager.lib.homeManagerConfiguration {

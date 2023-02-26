@@ -7,13 +7,22 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+
+  # System profile packages
   home.packages = with pkgs; [
+    # Development
     git
     tmux
     nixpkgs-fmt
+    asdf-vm
+
+    # Dependencies
+    gpgme
+    gawk
   ];
 
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnfreePredicate = (pkg: true);
 
   # Raw packages
 
@@ -31,6 +40,8 @@
 
     aliases = {
       refs = "for-each-ref --sort=-comitterdate refs/heads/";
+      stashgrep = "!f() { for i in `git stash list --format=\"%gd\"`; \
+                do git stash show -p $i | grep -H --label=\"$i\" \"$@\" ; done ; }; f";
     };
   };
 
@@ -66,7 +77,7 @@
       ll = "ls -l";
     };
 
-    profileExtra = "source $HOME/.cargo/env";
+    # profileExtra = "source $HOME/.cargo/env";
 
     history = {
       size = 10000;
