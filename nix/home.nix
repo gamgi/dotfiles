@@ -55,14 +55,14 @@
         User git
         UseKeychain yes
         AddKeysToAgent yes
-        IdentityFile ~/.ssh/id_rsa
+        IdentityFile ~/.ssh/id_ed25519
 
       Host gitlab.com
         IgnoreUnknown UseKeychain
         User git
         UseKeychain yes
         AddKeysToAgent yes
-        IdentityFile ~/.ssh/id_rsa
+        IdentityFile ~/.ssh/id_ed25519
     '';
   };
 
