@@ -22,7 +22,12 @@
     in
     {
       homeConfigurations.pietu = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
+        # inherit pkgs;
+        # https://github.com/nix-community/home-manager/issues/2942#issuecomment-1378627909
+        pkgs = import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+        };
 
         # Specify your home configuration modules here, for example,
         # the path to your home.nix.

@@ -24,6 +24,7 @@
       # "logseq"
       # "discord"
       # "iina"
+      "scoot"
     ];
   };
 
@@ -38,6 +39,8 @@
       remapCapsLockToEscape = true;
     };
   };
+  system.defaults.dock.tilesize = 32;
+  system.defaults.dock.autohide = true;
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
