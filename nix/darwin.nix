@@ -13,6 +13,7 @@
     onActivation.upgrade = true;
     brews = [
       # NOTE: Prefer casks and nixpkgs
+      "asdf"
       "openssl@3"
     ];
     casks = [

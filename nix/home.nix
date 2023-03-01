@@ -89,7 +89,10 @@
 
     oh-my-zsh = {
       enable = true;
-      plugins = [ "ssh-agent" ];
+      plugins = [
+        "ssh-agent"
+        "asdf"
+      ];
       theme = "clean";
     };
   };
