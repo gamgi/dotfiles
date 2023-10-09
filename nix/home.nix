@@ -95,32 +95,162 @@
         sha256 = "sha256-GJTCn6s9nN3kgbyJ4f1eFm7/fQezW2OmzcbSuYskDnk=";
       }
     ];
+    keybindings = [
+      {
+        key = "ctrl+shift+x";
+        command = "-workbench.view.extensions";
+        when = "viewContainer.workbench.view.extensions.enabled";
+      }
+      {
+        key = "ctrl+shift+x";
+        command = "workbench.action.terminal.toggleTerminal";
+        when = "terminal.active";
+      }
+      {
+        key = "ctrl+`";
+        command = "-workbench.action.terminal.toggleTerminal";
+        when = "terminal.active";
+      }
+      {
+        key = "shift+enter";
+        command = "-jupyter.execSelectionInteractive";
+        when = "editorTextFocus && jupyter.featureenabled && jupyter.ownsSelection && !findInputFocussed && !notebookEditorFocused && !replaceInputFocussed && editorLangId == 'python'";
+      }
+      {
+        key = "shift+enter";
+        command = "-python.execSelectionInTerminal";
+        when = "editorTextFocus && !findInputFocussed && !notebookEditorFocused && !python.datascience.ownsSelection && !replaceInputFocussed && editorLangId == 'python'";
+      }
+      {
+        key = "ctrl+shift+k";
+        command = "-editor.action.deleteLines";
+        when = "textInputFocus && !editorReadonly";
+      }
+      {
+        key = "ctrl+shift+k";
+        command = "workbench.action.terminal.focus";
+      }
+      {
+        key = "alt+down";
+        command = "workbench.action.terminal.focusNext";
+        when = "terminalFocus && terminalProcessSupported && !terminalEditorFocus";
+      }
+      {
+        key = "ctrl+pagedown";
+        command = "-workbench.action.terminal.focusNext";
+        when = "terminalFocus && terminalProcessSupported && !terminalEditorFocus";
+      }
+      {
+        key = "alt+up";
+        command = "workbench.action.terminal.focusPrevious";
+        when = "terminalFocus && terminalProcessSupported && !terminalEditorFocus";
+      }
+      {
+        key = "ctrl+pageup";
+        command = "-workbench.action.terminal.focusPrevious";
+        when = "terminalFocus && terminalProcessSupported && !terminalEditorFocus";
+      }
+      {
+        key = "ctrl+shift+k";
+        command = "workbench.action.focusActiveEditorGroup";
+        when = "terminalFocus";
+      }
+      {
+        key = "shift+enter";
+        command = "-python.execSelectionInTerminal";
+        when = "editorTextFocus && !findInputFocussed && !jupyter.ownsSelection && !notebookEditorFocused && !replaceInputFocussed && editorLangId == 'python'";
+      }
+      {
+        key = "cmd+k cmd+c";
+        command = "-editor.action.addCommentLine";
+        when = "editorTextFocus && !editorReadonly";
+      }
+      {
+        key = "shift+cmd+7";
+        command = "editor.action.commentLine";
+        when = "editorTextFocus && !editorReadonly";
+      }
+      {
+        key = "cmd+/";
+        command = "-editor.action.commentLine";
+        when = "editorTextFocus && !editorReadonly";
+      }
+      # maybe not needed
+      {
+        key = "ctrl+r";
+        command = "-extension.vim_ctrl+r";
+        when = "editorTextFocus && vim.active && vim.use<C-r> && !inDebugRepl";
+      }
+      {
+        key = "ctrl+r";
+        command = "-workbench.action.terminal.runRecentCommand";
+        when = "accessibilityModeEnabled && terminalFocus && terminalHasBeenCreated || accessibilityModeEnabled && terminalFocus && terminalProcessSupported";
+      }
+    ];
     userSettings = {
-        "vim.useCtrlKeys"= false;
-        "editor.scrollBeyondLastLine"= false;
-        "window.title"= "\${dirty}\${activeEditorLong}\${separator}\${rootName}\${separator}\${appName}";
-        "editor.autoClosingQuotes"= "beforeWhitespace";
-        "terminal.integrated.fontSize"= 12;
-        "editor.fontSize"= 13;
-        "keyboard.dispatch"= "keyCode";
-        "gitlens.codeLens.enabled"= false;
-        "gitlens.statusBar.enabled"= false;
-        "gitlens.hovers.avatars"= false;
-        "workbench.colorTheme"= "Material Theme Palenight High Contrast";
-        "security.workspace.trust.untrustedFiles"= "open";
-        "python.terminal.activateEnvironment"= false;
-        "editor.bracketPairColorization.enabled"= true;
-        "editor.autoClosingBrackets"= "never";
-        "diffEditor.ignoreTrimWhitespace"= false;
-        "redhat.telemetry.enabled"= false;
-        "rust-analyzer.lens.implementations"= false;
-        "rust-analyzer.inlayHints.typeHints.enable"= false;
-        "rust-analyzer.inlayHints.chainingHints.enable"= false;
-        "rust-analyzer.inlayHints.parameterHints.enable"= false;
-        "editor.minimap.enabled"= false;
-        "rust-analyzer.inlayHints.closureReturnTypeHints.enable"= "always";
-        "git.mergeEditor"= false;
-        "prettier.requireConfig"= true;
+      "vim.useCtrlKeys" = false;
+      "editor.scrollBeyondLastLine" = false;
+      "window.title" = "\${dirty}\${activeEditorLong}\${separator}\${rootName}\${separator}\${appName}";
+      "terminal.integrated.fontSize" = 10;
+      "zenMode.hideLineNumbers" = false;
+      "zenMode.centerLayout" = false;
+      "gitlens.menus" = {
+        "editorGroup" = {
+          "blame" = false;
+          "compare" = false;
+        };
+      };
+      "extensions.autoCheckUpdates" = false;
+      "powershell.powerShellAdditionalExePaths" = {
+        "nix" = "/Users/pietu/.nix-profile/bin/pwsh";
+      };
+      "powershell.powerShellDefaultVersion" = "nix";
+      "editor.fontSize" = 12;
+      "editor.autoClosingBrackets" = "never";
+      "editor.autoClosingQuotes" = "beforeWhitespace";
+      "editor.inlineSuggest.enabled" = true;
+      "keyboard.dispatch" = "keyCode";
+      "gitlens.codeLens.enabled" = false;
+      "gitlens.statusBar.enabled" = false;
+      "gitlens.hovers.avatars" = false;
+      "workbench.colorTheme" = "Community Material Theme Palenight High Contrast";
+      "workbench.colorCustomizations" = {
+        "terminal.findMatchBackground" = "#e26cff";
+        "terminal.findMatchBorder" = "#e26cff";
+        "terminal.findMatchHighlightBackground" = "#e26cff";
+        "terminal.findMatchHighlightBorder" = "#e26cff";
+        "terminalOverviewRuler.findMatchForeground" = "#e26cff";
+      };
+      "security.workspace.trust.untrustedFiles" = "open";
+      "python.terminal.activateEnvironment" = false;
+      "editor.bracketPairColorization.enabled" = true;
+      "editor.accessibilitySupport" = "off";
+      "diffEditor.ignoreTrimWhitespace" = false;
+      "redhat.telemetry.enabled" = false;
+      # rust analyzer
+      "rust-analyzer.lens.implementations" = false;
+      "rust-analyzer.inlayHints.typeHints.enable" = false;
+      "rust-analyzer.inlayHints.chainingHints.enable" = false;
+      "rust-analyzer.inlayHints.parameterHints.enable" = false;
+      "editor.minimap.enabled" = false;
+      "rust-analyzer.inlayHints.closureReturnTypeHints.enable" = "always";
+      "[html]"."editor.defaultFormatter" = "vscode.html-language-features";
+      "[yaml]"."editor.defaultFormatter" = "redhat.vscode-yaml";
+      "[javascript]"."editor.defaultFormatter" = "vscode.typescript-language-features";
+      "[json]"."editor.defaultFormatter" = "vscode.json-language-features";
+      "[jsonc]"."editor.defaultFormatter" = "vscode.json-language-features";
+      "[typescript]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
+      "[python]"."editor.formatOnType" = true;
+      "[css]"."editor.defaultFormatter" = "vscode.css-language-features";
+      "git.mergeEditor" = false;
+      "github.copilot.enable" = {
+        "*" = true;
+        "yaml" = false;
+        "plaintext" = true;
+        "markdown" = true;
+        "rs" = false;
+      };
+      "prettier.requireConfig" = true;
     };
   };
 
@@ -170,6 +300,14 @@
 
     profileExtra = ''
       eval "$(/opt/homebrew/bin/brew shellenv)";
+      # source /Users/pietu/.asdf/installs/rust/nightly/env;
+      # source /Users/pietu/.asdf/installs/rust/1.71.0/env;
+    '';
+
+    initExtra = ''
+      # https://github.com/ohmyzsh/ohmyzsh/issues/2537
+      unsetopt share_history
+      export PATH="/Users/pietu/.local/bin:$PATH"
     '';
 
     history = {
