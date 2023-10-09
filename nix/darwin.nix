@@ -25,6 +25,7 @@
       # "discord"
       # "iina"
       "scoot"
+      "insomnia"
     ];
   };
 

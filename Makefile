@@ -87,8 +87,12 @@ setup-nix-homemanager:
 switch-home:
 	home-manager switch --flake './nix/#pietu'
 
+update-home:
+	nix flake update ./nix/flake.nix
+
 switch-darwin:
 	./result/sw/bin/darwin-rebuild switch --flake ./nix/#pietu
+
 
 setup-nix-darwin:
 	nix build ./nix/#darwinConfigurations.pietu.system
@@ -131,6 +135,11 @@ doctor:
 	ls ~/Applications/Home\ Manager\ Apps
 	ls -l ~/.nix-profile/
 
+	nix eval --inputs-from ~/dotfiles/nix/ --raw nixpkgs#legacyPackages.aarch64-darwin.openssl.out
+	nix eval --inputs-from ~/dotfiles/nix/ --raw nixpkgs#legacyPackages.aarch64-darwin.openssl.dev
+	nix path-info -r /run/current-system | grep openssl
+
+.PHONY: lint
 lint:
 	nixpkgs-fmt nix/
 

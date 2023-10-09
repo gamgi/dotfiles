@@ -1,27 +1,40 @@
-  { config, pkgs, ... }:
+{ config, pkgs, ... }:
 
-  {
-    home.stateVersion = "22.11";
-    home.username = "pietu";
-    home.homeDirectory = "/Users/pietu";
+{
+  home.stateVersion = "22.11";
+  home.username = "pietu";
+  home.homeDirectory = "/Users/pietu";
 
-    # Let Home Manager install and manage itself.
-    programs.home-manager.enable = true;
+  # Let Home Manager install and manage itself.
+  programs.home-manager.enable = true;
 
-    # System profile packages
-    home.packages = with pkgs; [
-      # Development
-      git
-      tmux
-      nixpkgs-fmt
+  # System profile packages
+  home.packages = with pkgs; [
+    # Development
+    bun
+    git
+    tmux
+    nixpkgs-fmt
+    flyctl
+    postgresql
+    powershell
+    dotnet-sdk_7
+    mono6
+    vale
+    ffmpeg
+    shunit2
+    shellcheck
+    spotify-tui
+    terraform
+    cmatrix
 
-      # Dependencies
-      gpgme
-      gawk
-    ];
+    # Dependencies
+    gpgme
+    gawk
+  ];
 
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.allowUnfreePredicate = (pkg: true);
+  # nixpkgs.config.allowUnfreePredicate = (pkg: true);
 
   # Raw packages
 
@@ -34,6 +47,12 @@
 
   programs.vscode = {
     enable = true;
+    # PROBLEM SIWTH EXTENSIONS?
+    # 1. check code --list-extensions
+    # 2. delete .vscode/extensions
+    # 3. change something and rebuld home manager
+    # workaround https://github.com/nix-community/home-manager/issues/3507
+    mutableExtensionsDir = true;
     extensions = with pkgs.vscode-extensions; [
       bbenoist.nix
       dbaeumer.vscode-eslint
@@ -41,8 +60,14 @@
       esbenp.prettier-vscode
       hashicorp.terraform
       jakebecker.elixir-ls
+      github.copilot
       matklad.rust-analyzer
+      ms-vscode.PowerShell
+      ms-python.python
+      ms-dotnettools.csharp
       phoenixframework.phoenix
+      redhat.vscode-xml
+      redhat.vscode-yaml
       vscodevim.vim
     ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
       {
@@ -56,6 +81,18 @@
         publisher = "equinusocio";
         version = "2.2.1";
         sha256 = "03mxvm8c9zffzykc84n2y34jzl3l7jvnsvnqwn6gk9adzfd2bh41";
+      }
+      {
+        name = "volar";
+        publisher = "Vue";
+        version = "1.2.0";
+        sha256 = "sha256-rIvZEl2KxT8m7lFQZ3lIRzksmxIx2+tKFR7v2HCj/XM=";
+      }
+      {
+        name = "bun-vscode";
+        publisher = "oven";
+        version = "0.0.8";
+        sha256 = "sha256-GJTCn6s9nN3kgbyJ4f1eFm7/fQezW2OmzcbSuYskDnk=";
       }
     ];
     userSettings = {
