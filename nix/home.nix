@@ -1,9 +1,9 @@
-{ config, pkgs, ... }:
+{ config, pkgs, username, ... }:
 
 {
   home.stateVersion = "22.11";
-  home.username = "pietu";
-  home.homeDirectory = "/Users/pietu";
+  home.username = "${username}";
+  home.homeDirectory = "/Users/${username}";
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -256,8 +256,8 @@
 
   programs.git = {
     enable = true;
-    userName = "Pietu R";
-    userEmail = "pietu_r@gmx.com";
+    userName = "change me";
+    userEmail = "changeme@example.com";
 
     aliases = {
       refs = "for-each-ref --sort=-comitterdate refs/heads/";
@@ -307,7 +307,7 @@
     initExtra = ''
       # https://github.com/ohmyzsh/ohmyzsh/issues/2537
       unsetopt share_history
-      export PATH="/Users/pietu/.local/bin:$PATH"
+      export PATH="/Users/changeme/.local/bin:$PATH"
     '';
 
     history = {

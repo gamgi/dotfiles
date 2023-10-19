@@ -1,5 +1,6 @@
 SHELL := /bin/bash
 UNAME_S := $(shell uname -s)
+USER := changeme
 
 ifeq ($(UNAME_S),Linux)
 VSCOUSR_DIR  := $(HOME)/.config/VSCodium/User
@@ -76,29 +77,32 @@ setup-nix:
 	  mkdir -p "$$(dirname $(NIXPKGC_FILE))"; \
 	  echo "{\nallowUnfree = true; $(TAG)\n}" > $(NIXPKGC_FILE); \
 	fi
-	
+
+install-scripts:
+	#mkdir -p "$(DESTDIR)$(USERLOC_DIR)/bin"
 
 $(NIXPROF_DIR):
 	nix-env --profile $(NIXPROF_DIR) -i nix
 
 
 setup-nix-homemanager:
-	nix build --no-link ./nix/#homeConfigurations.pietu.activationPackage
-	"$$(nix path-info ./nix/#homeConfigurations.pietu.activationPackage)"/activate
+	nix build --no-link ./nix/#homeConfigurations.$(USER).activationPackage
+	"$$(nix path-info ./nix/#homeConfigurations.$(USER).activationPackage)"/activate
 
 switch-home:
-	home-manager switch --flake './nix/#pietu'
+	# home-manager switch -b backup --flake './nix/#$(USER)'
+	home-manager switch --flake './nix/#$(USER)'
 
 update-home:
 	nix flake update ./nix/flake.nix
 
 switch-darwin:
-	./result/sw/bin/darwin-rebuild switch --flake ./nix/#pietu
+	./result/sw/bin/darwin-rebuild switch --flake './nix/#$(USER)'
 
 
 setup-nix-darwin:
-	nix build ./nix/#darwinConfigurations.pietu.system
-	./result/sw/bin/darwin-rebuild switch --flake ./nix/#pietu
+	nix build ./nix/#darwinConfigurations.$(USER).system
+	./result/sw/bin/darwin-rebuild switch --flake './nix/#$(USER)'
 
 	#may have to do
 	#printf 'run\tprivate/var/run\n' | sudo tee -a /etc/synthetic.conf

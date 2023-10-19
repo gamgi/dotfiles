@@ -15,6 +15,8 @@
       # NOTE: Prefer casks and nixpkgs
       "asdf"
       "openssl@3"
+      "xz"
+      "zlib"
     ];
     casks = [
       # "iterm2"
@@ -24,7 +26,7 @@
       # "logseq"
       # "discord"
       # "iina"
-      "scoot"
+      # "scoot"
       "insomnia"
     ];
   };
