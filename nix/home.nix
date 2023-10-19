@@ -17,16 +17,27 @@
     nixpkgs-fmt
     flyctl
     postgresql
-    powershell
+    # powershell
     dotnet-sdk_7
     mono6
-    vale
     ffmpeg
     shunit2
     shellcheck
-    spotify-tui
+    shellspec
+    bats
     terraform
     cmatrix
+
+    # Cloud development
+    awscli2
+    aws-sam-cli
+
+    # Other
+    vale
+    spotify-tui
+
+    # Data
+    visidata
 
     # Dependencies
     gpgme
@@ -62,19 +73,26 @@
       jakebecker.elixir-ls
       github.copilot
       matklad.rust-analyzer
-      ms-vscode.PowerShell
+      # ms-vscode.PowerShell
       ms-python.python
       ms-dotnettools.csharp
       phoenixframework.phoenix
       redhat.vscode-xml
       redhat.vscode-yaml
       vscodevim.vim
+      timonwong.shellcheck
     ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
       {
         name = "vsc-community-material-theme";
         publisher = "equinusocio";
         version = "1.4.4";
         sha256 = "005l4pr9x3v6x8450jn0dh7klv0pv7gv7si955r7b4kh19r4hz9y";
+      }
+      {
+        name = "aws-toolkit-vscode";
+        publisher = "AmazonWebServices";
+        version = "1.94.0";
+        sha256 = "Z++saaEDeGuqg7moF3m9yugIxrMulIiz+zwnm+RJzbs=";
       }
       {
         name = "vsc-material-theme-icons";
@@ -201,10 +219,10 @@
         };
       };
       "extensions.autoCheckUpdates" = false;
-      "powershell.powerShellAdditionalExePaths" = {
-        "nix" = "/Users/pietu/.nix-profile/bin/pwsh";
-      };
-      "powershell.powerShellDefaultVersion" = "nix";
+      # "powershell.powerShellAdditionalExePaths" = {
+      #   "nix" = "/Users/changeme/.nix-profile/bin/pwsh";
+      # };
+      # "powershell.powerShellDefaultVersion" = "nix";
       "editor.fontSize" = 12;
       "editor.autoClosingBrackets" = "never";
       "editor.autoClosingQuotes" = "beforeWhitespace";
@@ -264,6 +282,9 @@
       stashgrep = "!f() { for i in `git stash list --format=\"%gd\"`; \
                 do git stash show -p $i | grep -H --label=\"$i\" \"$@\" ; done ; }; f";
     };
+    extraConfig = {
+      includeIf."gitdir:~/code/work/".path = "~/code/work/.gitconfig";
+    };
   };
 
   programs.ssh = {
@@ -277,6 +298,11 @@
         UseKeychain yes
         AddKeysToAgent yes
         IdentityFile ~/.ssh/id_ed25519
+
+      Host github.com
+        AddKeysToAgent yes
+        UseKeychain yes
+        IdentityFile ~/.ssh/id_ed25519_work
 
       Host gitlab.com
         IgnoreUnknown UseKeychain
@@ -300,8 +326,6 @@
 
     profileExtra = ''
       eval "$(/opt/homebrew/bin/brew shellenv)";
-      # source /Users/pietu/.asdf/installs/rust/nightly/env;
-      # source /Users/pietu/.asdf/installs/rust/1.71.0/env;
     '';
 
     initExtra = ''
