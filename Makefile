@@ -13,12 +13,12 @@ BASHRCC_FILE := $(HOME)/.bashrc
 NIXCONF_FILE := $(HOME)/.config/nix/nix.conf
 NIXPKGC_FILE := $(HOME)/.config/nixpkgs/config.nix
 USERLOC_DIR  := $(HOME)/.local
-NIXPROF_DIR  := /nix/var/nix/profiles/per-user/$(USER)/default
 FFDESKT_FILE := /usr/share/applications/firefox.desktop
 TAG=\# managed by dotfiles
 
 
-.PHONY: help nix lint uninstall install setup-nix
+.PHONY: help nix setup lint uninstall install setup-nix install-scripts \
+        install-nix install-other setup-nix-homemanager switch-home update-home switch-darwin setup-nix-darwin install-homebrew setup-asdf
 
 help: ## Display this help
 	@grep -E '^[ a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "%-30s %s\n", $$1, $$2}'
@@ -42,6 +42,8 @@ uninstall: ## Uninstall
 	mkdir -p "$(USERLOC_DIR)/share/applications"
 
 install: install-scripts install-nix install-other  ## Install
+
+setup: setup-nix setup-nix-homemanager ## Setup
 
 install-other: other/settings.json other/keybindings.json
 	# bash prompt with git branch
@@ -105,8 +107,7 @@ setup-nix-darwin:
 install-homebrew:
 	/bin/bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-
-install-asdf:
+setup-asdf:
 	asdf plugin add erlang https://github.com/asdf-vm/asdf-erlang.git || true
 	asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git || true
 	asdf plugin-add rust https://github.com/code-lever/asdf-rust.git || true
@@ -116,28 +117,8 @@ install-asdf:
 	# NOTE: requires openssl in LD_LIBRARY_PATH
 	KERL_CONFIGURE_OPTIONS="--without-javac" KERL_BUILD_DOCS=yes asdf install erlang 25.0
 
-nix: $(NIXPROF_DIR) $(wildcard nix/*.nix) ## Build nix profile
-ifeq ($(UNAME_S),Linux)
-	nix-env --profile $< -i -f nix/common-linux.nix
-	nix-env --profile $< -i -f nix/dev-linux.nix
-	nix-env --profile $< -i -f nix/office-linux.nix
-	nix-env --profile $< -i -f nix/creative-linux.nix
-	nix-env --profile $< -i -f nix/convenience-linux.nix
-endif
-ifeq ($(UNAME_S),Darwin)
-	nix-env --profile $< -i -f nix/dev-macos.nix
-endif
-	nix-env --profile $< -i -f nix/tools.nix
-	nix-env --profile $< -i -f nix/messaging.nix
 	
-doctor:
-	ls /Applications/Nix\ Apps
-	ls ~/Applications/Home\ Manager\ Apps
-	ls -l ~/.nix-profile/
 
-	nix eval --inputs-from ~/dotfiles/nix/ --raw nixpkgs#legacyPackages.aarch64-darwin.openssl.out
-	nix eval --inputs-from ~/dotfiles/nix/ --raw nixpkgs#legacyPackages.aarch64-darwin.openssl.dev
-	nix path-info -r /run/current-system | grep openssl
 
 .PHONY: lint
 lint:
