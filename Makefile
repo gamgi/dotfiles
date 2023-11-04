@@ -93,6 +93,9 @@ switch-home:
 	# home-manager switch -b backup --flake './nix/#$(USER)'
 	home-manager switch --flake './nix/#$(USER)'
 
+news:
+	home-manager news --flake './nix/#$(USER)'
+
 update-home:
 	nix flake update ./nix/flake.nix
 

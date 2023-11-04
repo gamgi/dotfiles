@@ -26,7 +26,7 @@
     shellspec
     bats
     terraform
-    cmatrix
+    cookiecutter
 
     # Cloud development
     awscli2
@@ -35,6 +35,7 @@
     # Other
     vale
     spotify-tui
+    cmatrix
 
     # Data
     visidata
@@ -219,6 +220,8 @@
         };
       };
       "extensions.autoCheckUpdates" = false;
+      # disable AWS toolkit telemetry
+      "aws.telemetry" = false;
       # "powershell.powerShellAdditionalExePaths" = {
       #   "nix" = "/Users/changeme/.nix-profile/bin/pwsh";
       # };
