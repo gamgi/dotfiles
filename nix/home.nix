@@ -34,11 +34,12 @@
 
     # Other
     vale
-    spotify-tui
     cmatrix
 
     # Data
     visidata
+    duckdb
+    ripgrep
 
     # Dependencies
     gpgme
@@ -84,16 +85,16 @@
       timonwong.shellcheck
     ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
       {
-        name = "vsc-community-material-theme";
+        name = "vsc-material-theme";
         publisher = "equinusocio";
-        version = "1.4.4";
-        sha256 = "005l4pr9x3v6x8450jn0dh7klv0pv7gv7si955r7b4kh19r4hz9y";
+        version = "34.3.0";
+        sha256 = "sha256-2SA2k2qngI3t3isSUCdxYHsAFVW+atGFFRnzP2RFdxw=";
       }
       {
-        name = "aws-toolkit-vscode";
-        publisher = "AmazonWebServices";
-        version = "1.94.0";
-        sha256 = "Z++saaEDeGuqg7moF3m9yugIxrMulIiz+zwnm+RJzbs=";
+        name = "mypy-type-checker";
+        publisher = "ms-python";
+        version = "2023.7.13181008";
+        sha256 = "sha256-RBSnOHD1XAfHvt7t3qdkxjoDvQrH4cLTHZYAoSpLD3g=";
       }
       {
         name = "vsc-material-theme-icons";
@@ -112,6 +113,12 @@
         publisher = "oven";
         version = "0.0.8";
         sha256 = "sha256-GJTCn6s9nN3kgbyJ4f1eFm7/fQezW2OmzcbSuYskDnk=";
+      }
+      {
+        name = "even-better-toml";
+        publisher = "tamasfe";
+        version = "0.19.2";
+        sha256 = "sha256-JKj6noi2dTe02PxX/kS117ZhW8u7Bhj4QowZQiJKP2E=";
       }
     ];
     keybindings = [
@@ -213,6 +220,7 @@
       "terminal.integrated.fontSize" = 10;
       "zenMode.hideLineNumbers" = false;
       "zenMode.centerLayout" = false;
+      "zenMode.fullScreen" = false;
       "gitlens.menus" = {
         "editorGroup" = {
           "blame" = false;
@@ -234,7 +242,7 @@
       "gitlens.codeLens.enabled" = false;
       "gitlens.statusBar.enabled" = false;
       "gitlens.hovers.avatars" = false;
-      "workbench.colorTheme" = "Community Material Theme Palenight High Contrast";
+      "workbench.colorTheme" = "Material Theme Palenight High Contrast";
       "workbench.colorCustomizations" = {
         "terminal.findMatchBackground" = "#e26cff";
         "terminal.findMatchBorder" = "#e26cff";
@@ -249,7 +257,6 @@
       "diffEditor.ignoreTrimWhitespace" = false;
       "redhat.telemetry.enabled" = false;
       # rust analyzer
-      "rust-analyzer.lens.implementations" = false;
       "rust-analyzer.inlayHints.typeHints.enable" = false;
       "rust-analyzer.inlayHints.chainingHints.enable" = false;
       "rust-analyzer.inlayHints.parameterHints.enable" = false;
@@ -262,6 +269,7 @@
       "[jsonc]"."editor.defaultFormatter" = "vscode.json-language-features";
       "[typescript]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
       "[python]"."editor.formatOnType" = true;
+      "[python]"."editor.defaultFormatter" = "ms-python.black-formatter";
       "[css]"."editor.defaultFormatter" = "vscode.css-language-features";
       "git.mergeEditor" = false;
       "github.copilot.enable" = {
@@ -281,7 +289,7 @@
     userEmail = "changeme@example.com";
 
     aliases = {
-      refs = "for-each-ref --sort=-comitterdate refs/heads/";
+      refs = "for-each-ref --sort=-committerdate refs/heads/";
       stashgrep = "!f() { for i in `git stash list --format=\"%gd\"`; \
                 do git stash show -p $i | grep -H --label=\"$i\" \"$@\" ; done ; }; f";
     };

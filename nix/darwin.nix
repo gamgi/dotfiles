@@ -28,6 +28,7 @@
       # "iina"
       # "scoot"
       "insomnia"
+      "cyberduck"
     ];
   };
 
