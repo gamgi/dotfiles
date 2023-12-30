@@ -115,14 +115,14 @@ install-homebrew:
 	/bin/bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 setup-asdf:
-	asdf plugin add erlang https://github.com/asdf-vm/asdf-erlang.git || true
-	asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git || true
+	# asdf plugin add erlang https://github.com/asdf-vm/asdf-erlang.git || true
+	# asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git || true
 	asdf plugin-add rust https://github.com/code-lever/asdf-rust.git || true
-	asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git || true
+	# asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git || true
 
 	# Install Erlang in a specific way
 	# NOTE: requires openssl in LD_LIBRARY_PATH
-	KERL_CONFIGURE_OPTIONS="--without-javac" KERL_BUILD_DOCS=yes asdf install erlang 25.0
+	# KERL_CONFIGURE_OPTIONS="--without-javac" KERL_BUILD_DOCS=yes asdf install erlang 25.0
 
 	
 
