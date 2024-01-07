@@ -140,6 +140,18 @@
         version = "0.19.2";
         sha256 = "sha256-JKj6noi2dTe02PxX/kS117ZhW8u7Bhj4QowZQiJKP2E=";
       }
+      #{
+      #  name = "csharp";
+      #  publisher = "ms-dotnettools";
+      #  version = "1.25.4";
+      #  sha256 = "sha256-9vLEwa0HB6DOLyoOXqMwWkFCe7S8epg3rfyPgSco5VY=";
+      #}
+      {
+        name = "plastic-scm";
+        publisher = "plastic-scm";
+        version = "0.1.2";
+        sha256 = "sha256-kqN163LhfjDnvuJdSlEXxl5fKEA3HgshRwaTTFa6IJ4=";
+      }
     ];
     keybindings = [
       {
@@ -255,7 +267,7 @@
       # };
       # "powershell.powerShellDefaultVersion" = "nix";
       "powershell.powerShellAdditionalExePaths" = {
-        "nix" = "/Users/pietu/.nix-profile/bin/pwsh";
+        "nix" = "/Users/changeme/.nix-profile/bin/pwsh";
       };
       "powershell.powerShellDefaultVersion" = "nix";
       "editor.fontSize" = 12;
