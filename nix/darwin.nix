@@ -17,6 +17,8 @@
       "openssl@3"
       "xz"
       "zlib"
+      #"mono"
+      #"websocat" # for up-to-date version
     ];
     casks = [
       # "iterm2"
@@ -27,6 +29,8 @@
       # "discord"
       # "iina"
       # "scoot"
+      # "dotnet-sdk"
+      # "mono-mdk"
       "insomnia"
       "cyberduck"
     ];
@@ -49,4 +53,11 @@
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
   nix.package = pkgs.nix;
+
+  # Local DNS overrides
+  # services.dnsmasq.enable = true;
+  # services.dnsmasq.addresses = {
+  #   localhost = "127.0.0.1";
+  #   "dashboard.example.local" = "127.0.0.1";
+  # };
 }

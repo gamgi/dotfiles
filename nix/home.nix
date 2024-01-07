@@ -32,18 +32,38 @@
     awscli2
     aws-sam-cli
 
+    # Network
+    nmap
+    wakeonlan
+
     # Other
     vale
     cmatrix
+    # asdf-vm
+
+    # Other
+    doxygen
 
     # Data
     visidata
+    jq
     duckdb
     ripgrep
 
     # Dependencies
     gpgme
     gawk
+    ncurses
+    # openssl
+    # openssl.dev
+    # openssl.out
+    # openssl_1_1
+    # openssl_1_1.dev
+    # openssl_1_1.out
+    # openssh
+    # zlib
+    # zlib.dev
+    # zlib.out
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -234,6 +254,10 @@
       #   "nix" = "/Users/changeme/.nix-profile/bin/pwsh";
       # };
       # "powershell.powerShellDefaultVersion" = "nix";
+      "powershell.powerShellAdditionalExePaths" = {
+        "nix" = "/Users/pietu/.nix-profile/bin/pwsh";
+      };
+      "powershell.powerShellDefaultVersion" = "nix";
       "editor.fontSize" = 12;
       "editor.autoClosingBrackets" = "never";
       "editor.autoClosingQuotes" = "beforeWhitespace";
@@ -252,6 +276,7 @@
       };
       "security.workspace.trust.untrustedFiles" = "open";
       "python.terminal.activateEnvironment" = false;
+      "rust-analyzer.cargo.autoreload" = false;
       "editor.bracketPairColorization.enabled" = true;
       "editor.accessibilitySupport" = "off";
       "diffEditor.ignoreTrimWhitespace" = false;
@@ -337,6 +362,8 @@
 
     profileExtra = ''
       eval "$(/opt/homebrew/bin/brew shellenv)";
+      source /Users/changeme/.asdf/installs/rust/nightly/env;
+      source /Users/changeme/.asdf/installs/rust/1.71.0/env;
     '';
 
     initExtra = ''

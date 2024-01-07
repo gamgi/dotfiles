@@ -61,6 +61,7 @@ install-other: other/settings.json other/keybindings.json
 	# set firefox gtk theme
 	sudo sed -i -- 's/^Exec=firefox %u$$/Exec=bash -c "GTK_THEME=\\" \\" firefox %u"/' /usr/share/applications/firefox.desktop
 	
+
 install-nix:
 	sh <(curl -L https://nixos.org/nix/install) --daemon
 
