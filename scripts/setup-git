@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
 set -eu
 
+WORKDIR=~/code/work
+
 set_identity() {
-	array=( user.name user.email )
-	for setting in "${array[@]}"
-	do
-	  echo "$setting?"
-	  read value
-	  git config --global $setting "$value"
-	done
+  array=( user.name user.email )
+  for setting in "${array[@]}"; do
+    echo "$setting?"
+    read -r value
+    git config --global "$setting" "$value"
+  done
 }
 
 set_misc() {
@@ -16,9 +17,16 @@ set_misc() {
   git config --global pull.ff only
 }
 
+add_gitconfig() {
+  mkdir -p "$WORKDIR"
+  printf "[user]\n  email = changeme@example.com\n" > "$WORKDIR/.gitconfig"
+}
+
 set_identity
 set_misc
+add_gitconfig
 
 echo "Current settings:" && git config --list
 
+echo "Recommended: update $WORKDIR/.gitconfig with your work email."
 echo "Recommended: set up ssh keys now."

@@ -18,6 +18,7 @@
 5. Run `make setup`
 6. Run `make setup-asdf`
 7. Install firefox plugins, setup bookmarks, add ssh keys.
+8. Run `bash scripts/setup-git`
 
 ## Usage
 
