@@ -27,10 +27,19 @@
     bats
     terraform
     cookiecutter
+    cloc
+    lldb_16
+    plantuml
+    graphviz
 
     # Cloud development
     awscli2
     aws-sam-cli
+    yq
+
+    # *nix
+    tree
+    unixtools.watch
 
     # Network
     nmap
@@ -92,16 +101,22 @@
       eamodio.gitlens
       esbenp.prettier-vscode
       hashicorp.terraform
-      jakebecker.elixir-ls
+      # jakebecker.elixir-ls
       github.copilot
-      matklad.rust-analyzer
+      # matklad.rust-analyzer
+      rust-lang.rust-analyzer
       # ms-vscode.PowerShell
       ms-python.python
+      # ms-dotnettools.csdevkit
       ms-dotnettools.csharp
+      # github.vscode-github-actions
+      # ms-vscode-remote.remote-containers
       phoenixframework.phoenix
       redhat.vscode-xml
       redhat.vscode-yaml
       vscodevim.vim
+      # scala-lang.scala
+      # scalameta.metals
       timonwong.shellcheck
     ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
       {
@@ -259,6 +274,8 @@
           "compare" = false;
         };
       };
+      "github.gitAuthentication" = false;
+      "git.terminalAuthentication" = false;
       "extensions.autoCheckUpdates" = false;
       # disable AWS toolkit telemetry
       "aws.telemetry" = false;
@@ -266,10 +283,6 @@
       #   "nix" = "/Users/changeme/.nix-profile/bin/pwsh";
       # };
       # "powershell.powerShellDefaultVersion" = "nix";
-      "powershell.powerShellAdditionalExePaths" = {
-        "nix" = "/Users/changeme/.nix-profile/bin/pwsh";
-      };
-      "powershell.powerShellDefaultVersion" = "nix";
       "editor.fontSize" = 12;
       "editor.autoClosingBrackets" = "never";
       "editor.autoClosingQuotes" = "beforeWhitespace";
@@ -278,6 +291,7 @@
       "gitlens.codeLens.enabled" = false;
       "gitlens.statusBar.enabled" = false;
       "gitlens.hovers.avatars" = false;
+      "gitlens.ai.experimental.generateCommitMessage.enabled" = false;
       "workbench.colorTheme" = "Material Theme Palenight High Contrast";
       "workbench.colorCustomizations" = {
         "terminal.findMatchBackground" = "#e26cff";
@@ -288,7 +302,7 @@
       };
       "security.workspace.trust.untrustedFiles" = "open";
       "python.terminal.activateEnvironment" = false;
-      "rust-analyzer.cargo.autoreload" = false;
+      # "rust-analyzer.cargo.autoreload" = false;
       "editor.bracketPairColorization.enabled" = true;
       "editor.accessibilitySupport" = "off";
       "diffEditor.ignoreTrimWhitespace" = false;

@@ -33,6 +33,7 @@
       # "mono-mdk"
       "insomnia"
       "cyberduck"
+      "keycastr"
     ];
   };
 
