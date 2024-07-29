@@ -354,17 +354,13 @@
     forwardAgent = true;
 
     extraConfig = ''
-      Host github.com
-        IgnoreUnknown UseKeychain
-        User git
-        UseKeychain yes
-        AddKeysToAgent yes
-        IdentityFile ~/.ssh/id_ed25519
+      Match host github.com exec "[ $(git config user.email) = changeme ]"
+        IdentityFile ~/.ssh/id_ed25519_work
 
       Host github.com
         AddKeysToAgent yes
         UseKeychain yes
-        IdentityFile ~/.ssh/id_ed25519_work
+        IdentityFile ~/.ssh/id_ed25519
 
       Host gitlab.com
         IgnoreUnknown UseKeychain
