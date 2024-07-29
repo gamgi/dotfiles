@@ -40,6 +40,10 @@ Brew pacakges are managed by the `darwinConfigs.<name>.homebrew`.
 2. Run `make update-home`
 3. Run `make switch-home` (takes a long time)
 
+### Updating VSCode extensions
+
+Update version strings or commit hashes in `nix/home.nix`.
+
 ### Packages not managed by nix
 
 A choice has been made to leave the following outside nix.
@@ -65,4 +69,12 @@ https://github.com/NixOS/nix/issues/3616
 4. Check if `/Library/LaunchDaemons/org.nixos.darwin-store.plist` exists
 5. Based on above, proceed as in https://gist.github.com/meeech/0b97a86f235d10bc4e2a1116eec38e7e
 
+### VSCode extensions broken
 
+1. Remove `~/.vscode/extensions`
+2. Run `make switch-home`
+
+### Dotnet foo bar
+
+1. Check if `dotnet --list-sdks` has anything eg `/nix/store/y9m04c28a2hnzjwnddl0vik6piajka76-dotnet-sdk-7.0.400/sdk`
+2. Check that the ms-csharp plugin is installed in vscode, it should download to /Users/changeme/Library/Application Support/Code/User/globalStorage/ms-dotnettools.vscode-dotnet-runtime/.dotnet/7.0.16~arm64/dotnet
