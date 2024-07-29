@@ -2,12 +2,6 @@ SHELL := /bin/bash
 UNAME_S := $(shell uname -s)
 USER := changeme
 
-ifeq ($(UNAME_S),Linux)
-VSCOUSR_DIR  := $(HOME)/.config/VSCodium/User
-endif
-ifeq ($(UNAME_S),Darwin)
-VSCOUSR_DIR  := $(HOME)/Library/Application Support/Code/User
-endif
 PREFIX=/usr/local
 PROFILE_FILE := $(HOME)/.profile
 BASHRCC_FILE := $(HOME)/.bashrc
@@ -46,17 +40,12 @@ install: install-scripts install-nix install-other  ## Install
 
 setup: setup-nix setup-nix-homemanager ## Setup
 
-install-other: other/settings.json other/keybindings.json
+install-other:
 	# bash prompt with git branch
 	echo 'parse_git_branch() { git branch 2> /dev/null | sed -e ' \
 	"'/^[^*]/d' -e 's/* \(.*\)/(\\\1)/';" \
 	"} $(TAG)" >> $(BASHRCC_FILE)
 	echo "export PS1=\"\\u@\\h \\[\\\e[32m\\]\\w\\[\\\e[91m\\]\\\$$(parse_git_branch)\\[\\\e[00m\\] $$ \" $(TAG)" >> $(BASHRCC_FILE)
-
-	# vscodium config (sas not able to nixify easily)
-	mkdir -p "$(VSCOUSR_DIR)/share/applications"
-	cp other/settings.json $(VSCOUSR_DIR)
-	cp other/keybindings.json $(VSCOUSR_DIR)
 	
 	# set firefox gtk theme
 	sudo sed -i -- 's/^Exec=firefox %u$$/Exec=bash -c "GTK_THEME=\\" \\" firefox %u"/' /usr/share/applications/firefox.desktop
