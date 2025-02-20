@@ -13,6 +13,7 @@
     # Development
     bun
     git
+    lazygit
     tmux
     nixpkgs-fmt
     flyctl
@@ -31,6 +32,7 @@
     lldb_16
     plantuml
     graphviz
+    watchexec
 
     # Cloud development
     awscli2
@@ -368,6 +370,12 @@
         UseKeychain yes
         AddKeysToAgent yes
         IdentityFile ~/.ssh/id_ed25519
+
+      Host example
+        HostName 0.0.0.0
+        UseKeychain yes
+        AddKeysToAgent yes
+        IdentityFile ~/.ssh/id_ed25519_example
     '';
   };
 
@@ -385,13 +393,15 @@
     profileExtra = ''
       eval "$(/opt/homebrew/bin/brew shellenv)";
       source /Users/changeme/.asdf/installs/rust/nightly/env;
-      source /Users/changeme/.asdf/installs/rust/1.71.0/env;
+      source /Users/changeme/.asdf/installs/rust/1.82.0/env;
     '';
 
     initExtra = ''
       # https://github.com/ohmyzsh/ohmyzsh/issues/2537
       unsetopt share_history
       export PATH="/Users/changeme/.local/bin:$PATH"
+      # TODO issue with oh-my-zsh not adding asdf to path, needs to be investigated
+      export PATH="$HOME/.asdf/shims:$PATH"
     '';
 
     history = {
@@ -406,6 +416,9 @@
         "asdf"
       ];
       theme = "clean";
+      extraConfig = ''
+        zstyle :omz:plugins:ssh-agent identities id_ed25519_work id_ed25519
+      '';
     };
   };
 

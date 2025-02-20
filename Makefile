@@ -25,13 +25,13 @@ uninstall: ## Uninstall
 	sed -i "/$(TAG)$$/d" $(BASHRCC_FILE) || true
 	sed -i "/$(TAG)$$/d" $(PROFILE_FILE) || true
 	sed -i "/$(TAG)$$/d" $(FFDESKT_FILE) || true
-	
+
 	# remove script links
 	rm "$(DESTDIR)$(USERLOC_DIR)/bin/devbox" || true
-	
+
 	# clean up config.nix
 	sed -i "/$(TAG)$$/d" $(NIXPKGC_FILE) || true
-	
+
 	# remove nix to pop_os link
 	rm -r "$(USERLOC_DIR)/share/applications"
 	mkdir -p "$(USERLOC_DIR)/share/applications"
@@ -46,10 +46,10 @@ install-other:
 	"'/^[^*]/d' -e 's/* \(.*\)/(\\\1)/';" \
 	"} $(TAG)" >> $(BASHRCC_FILE)
 	echo "export PS1=\"\\u@\\h \\[\\\e[32m\\]\\w\\[\\\e[91m\\]\\\$$(parse_git_branch)\\[\\\e[00m\\] $$ \" $(TAG)" >> $(BASHRCC_FILE)
-	
+
 	# set firefox gtk theme
 	sudo sed -i -- 's/^Exec=firefox %u$$/Exec=bash -c "GTK_THEME=\\" \\" firefox %u"/' /usr/share/applications/firefox.desktop
-	
+
 
 install-nix:
 	sh <(curl -L https://nixos.org/nix/install) --daemon
@@ -58,7 +58,7 @@ setup-nix:
 	# enable experimental nix features
 	mkdir -p "$$(dirname $(NIXCONF_FILE))"
 	echo "experimental-features = nix-command flakes $(TAG)" >> $(NIXCONF_FILE)
-	
+
 	# allow unfree
 	@if [ -f "$(NIXPKGC_FILE)" ]; then \
 	  echo "$(NIXPKGC_FILE) already exists, modifying."; \
@@ -105,19 +105,14 @@ install-homebrew:
 	/bin/bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 setup-asdf:
-	# asdf plugin add erlang https://github.com/asdf-vm/asdf-erlang.git || true
-	# asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git || true
 	asdf plugin-add rust https://github.com/code-lever/asdf-rust.git || true
 	# asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git || true
 
-	# Install Erlang in a specific way
-	# NOTE: requires openssl in LD_LIBRARY_PATH
-	# KERL_CONFIGURE_OPTIONS="--without-javac" KERL_BUILD_DOCS=yes asdf install erlang 25.0
+	asdf install rust nightly
 
-	
+
 
 
 .PHONY: lint
 lint:
 	nixpkgs-fmt nix/
-

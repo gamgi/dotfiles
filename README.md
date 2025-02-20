@@ -44,6 +44,15 @@ Brew pacakges are managed by the `darwinConfigs.<name>.homebrew`.
 
 Update version strings or commit hashes in `nix/home.nix`.
 
+### Updating Brew
+
+1. Run `brew update`
+
+### Updating rust toolchain
+
+1. Run `asdf uninstall rust nightly`
+2. Run `asdf install rust nightly`
+
 ### Packages not managed by nix
 
 A choice has been made to leave the following outside nix.
@@ -73,6 +82,7 @@ https://github.com/NixOS/nix/issues/3616
 
 1. Remove `~/.vscode/extensions`
 2. Run `make switch-home`
+3. Run `code --list-extensions`
 
 ### Dotnet foo bar
 
