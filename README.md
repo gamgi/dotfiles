@@ -64,6 +64,7 @@ A choice has been made to leave the following outside nix.
 * obsidian
 * docker
 * slack
+* zed
 ...etc
 
 ## Troubleshooting
@@ -84,7 +85,3 @@ https://github.com/NixOS/nix/issues/3616
 2. Run `make switch-home`
 3. Run `code --list-extensions`
 
-### Dotnet foo bar
-
-1. Check if `dotnet --list-sdks` has anything eg `/nix/store/y9m04c28a2hnzjwnddl0vik6piajka76-dotnet-sdk-7.0.400/sdk`
-2. Check that the ms-csharp plugin is installed in vscode, it should download to /Users/changeme/Library/Application Support/Code/User/globalStorage/ms-dotnettools.vscode-dotnet-runtime/.dotnet/7.0.16~arm64/dotnet
