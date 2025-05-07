@@ -48,7 +48,7 @@ install-other:
 	echo "export PS1=\"\\u@\\h \\[\\\e[32m\\]\\w\\[\\\e[91m\\]\\\$$(parse_git_branch)\\[\\\e[00m\\] $$ \" $(TAG)" >> $(BASHRCC_FILE)
 
 	# set firefox gtk theme
-	sudo sed -i -- 's/^Exec=firefox %u$$/Exec=bash -c "GTK_THEME=\\" \\" firefox %u"/' /usr/share/applications/firefox.desktop
+	# sudo sed -i -- 's/^Exec=firefox %u$$/Exec=bash -c "GTK_THEME=\\" \\" firefox %u"/' /usr/share/applications/firefox.desktop
 
 
 install-nix:
@@ -87,7 +87,7 @@ news:
 	home-manager news --flake './nix/#$(USER)'
 
 update-home:
-	nix flake update ./nix/flake.nix
+	nix flake update --flake ./nix/flake.nix
 
 switch-darwin:
 	./result/sw/bin/darwin-rebuild switch --flake './nix/#$(USER)'

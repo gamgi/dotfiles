@@ -48,12 +48,10 @@
     wakeonlan
 
     # Other
-    vale
+    # vale
     cmatrix
+    # doxygen
     # asdf-vm
-
-    # Other
-    doxygen
 
     # Data
     visidata
@@ -342,12 +340,13 @@
     userEmail = "changeme@example.com";
 
     aliases = {
-      refs = "for-each-ref --sort=-committerdate refs/heads/";
+      waddup = "for-each-ref --sort=-committerdate refs/heads/";
       stashgrep = "!f() { for i in `git stash list --format=\"%gd\"`; \
                 do git stash show -p $i | grep -H --label=\"$i\" \"$@\" ; done ; }; f";
     };
     extraConfig = {
       includeIf."gitdir:~/code/work/".path = "~/code/work/.gitconfig";
+      core.editor = "vim";
     };
   };
 
@@ -381,7 +380,7 @@
 
   programs.zsh = {
     enable = true;
-    enableAutosuggestions = true;
+    autosuggestion.enable = true;
     enableCompletion = true;
 
     dotDir = ".config/zsh";
@@ -393,7 +392,7 @@
     profileExtra = ''
       eval "$(/opt/homebrew/bin/brew shellenv)";
       source /Users/changeme/.asdf/installs/rust/nightly/env;
-      source /Users/changeme/.asdf/installs/rust/1.82.0/env;
+      source /Users/changeme/.asdf/installs/rust/1.86.0/env;
     '';
 
     initExtra = ''

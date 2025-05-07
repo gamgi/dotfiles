@@ -13,12 +13,18 @@
   - See list of unmanaged software below
   - brew (via sh or .pkg)
   - xcode (`xcode-select --install`)
+  - gcloud to `/Users/changeme/google-cloud-sdk/`
 3. Altern username in `flake.nix`, `Makefile` and so on.
 4. Run `make install`
 5. Run `make setup`
-6. Run `make setup-asdf`
+5.5 Run `make setup-nix-darwin`
+6. Run `make setup-asdf` (after checking asdf is installed by nix homemanager)
 7. Install firefox plugins, setup bookmarks, add ssh keys.
 8. Run `bash scripts/setup-git`
+9. Disable telemetry
+  - gcloud config set disable_usage_reporting false
+10. Setup uv
+  - Run `uv tool install llm` and so on...
 
 ## Usage
 
@@ -63,8 +69,10 @@ A choice has been made to leave the following outside nix.
 * appstore items (magnet, monosnap, intermission)
 * obsidian
 * docker
+* gcloud
 * slack
 * zed
+* uv
 ...etc
 
 ## Troubleshooting
@@ -85,3 +93,6 @@ https://github.com/NixOS/nix/issues/3616
 2. Run `make switch-home`
 3. Run `code --list-extensions`
 
+### Setting global asdf versions
+
+Since asdf [0.16](https://asdf-vm.com/guide/upgrading-to-v0-16.html#asdf-global-and-asdf-local-commands-have-been-replaced-with-asdf-set) the default version is set by using `--home` flag.

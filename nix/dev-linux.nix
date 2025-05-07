@@ -1,7 +1,7 @@
 let
   pkgs = import <nixpkgs> { };
-  pkgs-vscode = (import ./pkgs-vscode.nix) { inherit pkgs; };
-  pkgs-vscodium = (import ./pkgs-vscodium.nix) { inherit pkgs; };
+  #pkgs-vscode = (import ./pkgs-vscode.nix) { inherit pkgs; };
+  #pkgs-vscodium = (import ./pkgs-vscodium.nix) { inherit pkgs; };
   inherit (pkgs) buildEnv;
 
 in
@@ -11,9 +11,8 @@ buildEnv {
     git
     # docker via system
     #pkgs-vscode.vscode-with-extensions
-    pkgs-vscodium.vscodium-with-extensions
-    terraform
+    #pkgs-vscodium.vscodium-with-extensions
+    # terraform installed with brew
     insomnia
   ];
 }
-
