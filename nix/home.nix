@@ -344,15 +344,15 @@
 
   programs.git = {
     enable = true;
-    userName = "change me";
-    userEmail = "changeme@example.com";
-
-    aliases = {
-      waddup = "for-each-ref --sort=-committerdate refs/heads/";
-      stashgrep = "!f() { for i in `git stash list --format=\"%gd\"`; \
-                do git stash show -p $i | grep -H --label=\"$i\" \"$@\" ; done ; }; f";
-    };
-    extraConfig = {
+    settings = {
+      user.name = "change me";
+      user.email = "changeme@example.com";
+      alias = {
+        waddup = "for-each-ref --sort=-committerdate refs/heads/";
+        stashgrep = "!f() { for i in `git stash list --format=\"%gd\"`; \
+        do git stash show -p $i | grep -H --label=\"$i\" \"$@\" ; done ; }; f";
+        co = "checkout";
+      };
       includeIf."gitdir:~/code/work/".path = "~/code/work/.gitconfig";
       core.editor = "vim";
     };
@@ -360,7 +360,8 @@
 
   programs.ssh = {
     enable = true;
-    forwardAgent = true;
+    enableDefaultConfig = false;
+    matchBlocks."*".forwardAgent = true;
 
     extraConfig = ''
       Match host github.com exec "[ $(git config user.email) = changeme ]"
@@ -391,7 +392,7 @@
     autosuggestion.enable = true;
     enableCompletion = true;
 
-    dotDir = ".config/zsh";
+    dotDir = "${config.xdg.configHome}/zsh";
 
     shellAliases = {
       ll = "ls -l";
@@ -403,7 +404,7 @@
       source /Users/changeme/.asdf/installs/rust/1.86.0/env;
     '';
 
-    initExtra = ''
+    initContent = ''
       # https://github.com/ohmyzsh/ohmyzsh/issues/2537
       unsetopt share_history
       export PATH="/Users/changeme/.local/bin:$PATH"
