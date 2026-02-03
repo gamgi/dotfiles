@@ -8,6 +8,10 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
+  programs.atuin = {
+    enable = true;
+  };
+
   # System profile packages
   home.packages = with pkgs; [
     # Development
@@ -19,37 +23,41 @@
     flyctl
     postgresql
     # powershell
-    dotnet-sdk_7
-    mono6
+    # dotnet-sdk_7
+    # mono6
     ffmpeg
-    shunit2
+    exiftool
     shellcheck
-    shellspec
-    bats
-    terraform
-    cookiecutter
+    # shellspec
+    # bats
+    # terraform installed with brew
+    # cookiecutter
     cloc
-    lldb_16
+    # lldb_16
     plantuml
-    graphviz
-    watchexec
+    # graphviz
+    # watchexec
+    # youplot
 
     # Cloud development
-    awscli2
-    aws-sam-cli
-    yq
+    # yq
 
     # *nix
     tree
     unixtools.watch
 
     # Network
-    nmap
-    wakeonlan
+    # nmap
+    # wakeonlan
 
     # Other
     # vale
     cmatrix
+    aspell
+    aspellDicts.en
+    aspellDicts.en-computers
+    aspellDicts.en-science
+    imagemagick
     # doxygen
     # asdf-vm
 

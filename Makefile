@@ -105,10 +105,13 @@ install-homebrew:
 	/bin/bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 setup-asdf:
-	asdf plugin-add rust https://github.com/code-lever/asdf-rust.git || true
-	# asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git || true
+	asdf plugin add rust https://github.com/code-lever/asdf-rust.git || true
+	asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git || true
+	asdf plugin add python || true
+	asdf plugin add pnpm || true
 
 	asdf install rust nightly
+	# asdf install nodejs
 
 
 

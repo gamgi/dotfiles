@@ -1,5 +1,6 @@
 { pkgs, ... }:
 {
+  system.stateVersion = 6;
   # Packages installed in system profile
   environment.systemPackages = [
 
@@ -17,6 +18,10 @@
       "openssl@3"
       "xz"
       "zlib"
+      "tfenv"
+      "kubectl"
+      "kubectx"
+      "gh"
       #"mono"
       #"websocat" # for up-to-date version
     ];
@@ -31,6 +36,8 @@
       # "scoot"
       # "dotnet-sdk"
       # "mono-mdk"
+      "1password-cli"
+      "alt-tab"
       "insomnia"
       "cyberduck"
       "keycastr"
