@@ -30,3 +30,4 @@ echo "Current settings:" && git config --list
 
 echo "Recommended: update $WORKDIR/.gitconfig with your work email."
 echo "Recommended: set up ssh keys now."
+echo "Check /Users/nnn/.config/git/config that the overrides are after the normal git.username"

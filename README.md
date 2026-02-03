@@ -59,6 +59,12 @@ Update version strings or commit hashes in `nix/home.nix`.
 1. Run `asdf uninstall rust nightly`
 2. Run `asdf install rust nightly`
 
+Alternatively
+
+1. Install new versions with asdf
+2. Add path to `home.nix` zsh config's `profileExtra`.
+3. `asdf set rust 1.88.0 --home`
+
 ### Packages not managed by nix
 
 A choice has been made to leave the following outside nix.
@@ -96,3 +102,13 @@ https://github.com/NixOS/nix/issues/3616
 ### Setting global asdf versions
 
 Since asdf [0.16](https://asdf-vm.com/guide/upgrading-to-v0-16.html#asdf-global-and-asdf-local-commands-have-been-replaced-with-asdf-set) the default version is set by using `--home` flag.
+
+### Updating asdf / Missing asdf versions
+
+1. Run `brew upgrade asdf`
+2. Run `asdf plugin update nodejs`
+2. If still missing nodejs, try `asdf install nodejs latest:xx` ([source](https://github.com/asdf-vm/asdf-nodejs/issues/297#issuecomment-1558274814))
+
+### Updating brew packages
+
+Run `make switch-darwin`
