@@ -81,6 +81,12 @@ A choice has been made to leave the following outside nix.
 * uv
 ...etc
 
+## Firefox conf
+
+low_commit_space_threshold_percent = 0 // aggressive tab unloading
+signon.showAutoCompleteFooter = false // disable password hints
+signon.firefoxRelay.feature = unavailable // disable email mask provider
+
 ## Troubleshooting
 
 ### Nix broken after MacOS update
