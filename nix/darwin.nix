@@ -41,6 +41,8 @@
       "insomnia"
       "cyberduck"
       "keycastr"
+      "ngrok"
+      "claude-code"
     ];
   };
 

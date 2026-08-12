@@ -21,7 +21,9 @@
     tmux
     nixpkgs-fmt
     flyctl
-    postgresql
+    postgresql_18
+    hyperfine
+    entr
     # powershell
     # dotnet-sdk_7
     # mono6
@@ -40,6 +42,8 @@
     # youplot
 
     # Cloud development
+    # awscli2
+    # aws-sam-cli
     # yq
 
     # *nix
