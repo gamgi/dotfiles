@@ -117,6 +117,8 @@
         stashgrep = "!f() { for i in `git stash list --format=\"%gd\"`; \
         do git stash show -p $i | grep -H --label=\"$i\" \"$@\" ; done ; }; f";
         co = "checkout";
+        fix-committer = ''!git filter-branch --commit-filter 'GIT_COMMITTER_NAME="$GIT_AUTHOR_NAME"; GIT_COMMITTER_EMAIL="$GIT_AUTHOR_EMAIL"; GIT_COMMITTER_DATE="$GIT_AUTHOR_DATE"; git commit-tree "$@"' -- $(git merge-base master HEAD)..HEAD'';
+
       };
       includeIf."gitdir:~/code/work/".path = "~/code/work/.gitconfig";
       core.editor = "vim";
@@ -154,12 +156,13 @@
     profileExtra = ''
       eval "$(/opt/homebrew/bin/brew shellenv)";
       source /Users/changeme/.asdf/installs/rust/nightly/env;
-      source /Users/changeme/.asdf/installs/rust/1.86.0/env;
+      source /Users/changeme/.asdf/installs/rust/1.92.0/env;
     '';
 
     initContent = ''
       # https://github.com/ohmyzsh/ohmyzsh/issues/2537
       unsetopt share_history
+      unsetopt SHARE_HISTORY
       export PATH="/Users/changeme/.local/bin:$PATH"
       # TODO issue with oh-my-zsh not adding asdf to path, needs to be investigated
       export PATH="$HOME/.asdf/shims:$PATH"
