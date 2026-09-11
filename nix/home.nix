@@ -126,7 +126,7 @@
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    matchBlocks."*".forwardAgent = true;
+    settings."*".forwardAgent = true;
 
     extraConfig = ''
       Match host github.com exec "[ $(git config user.email) = changeme ]"
@@ -137,18 +137,6 @@
         UseKeychain yes
         IdentityFile ~/.ssh/id_ed25519
 
-      Host gitlab.com
-        IgnoreUnknown UseKeychain
-        User git
-        UseKeychain yes
-        AddKeysToAgent yes
-        IdentityFile ~/.ssh/id_ed25519
-
-      Host example
-        HostName 0.0.0.0
-        UseKeychain yes
-        AddKeysToAgent yes
-        IdentityFile ~/.ssh/id_ed25519_example
     '';
   };
 
