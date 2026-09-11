@@ -95,7 +95,7 @@ switch-darwin:
 
 setup-nix-darwin:
 	nix build ./nix/#darwinConfigurations.$(USER).system
-	./result/sw/bin/darwin-rebuild switch --flake './nix/#$(USER)'
+	sudo ./result/sw/bin/darwin-rebuild switch --flake './nix/#$(USER)'
 
 	#may have to do
 	#printf 'run\tprivate/var/run\n' | sudo tee -a /etc/synthetic.conf

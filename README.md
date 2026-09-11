@@ -33,12 +33,20 @@
 1. Edit `nix/home.nix`.
 2. Run `make switch-home`
 
+### Updating a nix package
+
+See "Updating channels".
+
 ### Adding a brew package
 
 Brew pacakges are managed by the `darwinConfigs.<name>.homebrew`.
 
 1. Edit `nix/darwin.nix`.
 2. Run `make switch-darwin`
+
+### Updating a Brew package
+
+`brew upgrade <package>`
 
 ### Updating channels
 
