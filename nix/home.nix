@@ -12,6 +12,18 @@
     enable = true;
   };
 
+  # hotkey daemon
+  services.skhd.enable = true;
+
+  xdg.configFile."skhd/skhdrc".text = ''
+    ctrl + alt - m : open -a Firefox https://github.com/pulls/authored
+
+    # send window to a space
+    shift + alt - 1 : yabai -m window --space 1
+    shift + alt - 2 : yabai -m window --space 2
+    shift + alt - 3 : yabai -m window --space 3
+  '';
+
   # System profile packages
   home.packages = with pkgs; [
     # Development
