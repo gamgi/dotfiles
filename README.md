@@ -54,10 +54,6 @@ Brew pacakges are managed by the `darwinConfigs.<name>.homebrew`.
 2. Run `make update-home`
 3. Run `make switch-home` (takes a long time)
 
-### Updating VSCode extensions
-
-Update version strings or commit hashes in `nix/home.nix`.
-
 ### Updating Brew
 
 1. Run `brew update`
@@ -90,9 +86,11 @@ A choice has been made to leave the following outside nix.
 
 ## Firefox conf
 
+```
 low_commit_space_threshold_percent = 0 // aggressive tab unloading
 signon.showAutoCompleteFooter = false // disable password hints
 signon.firefoxRelay.feature = unavailable // disable email mask provider
+```
 
 ## Troubleshooting
 
@@ -105,12 +103,6 @@ https://github.com/NixOS/nix/issues/3616
 3. Check if `/etc/fstab/` has nix entry
 4. Check if `/Library/LaunchDaemons/org.nixos.darwin-store.plist` exists
 5. Based on above, proceed as in https://gist.github.com/meeech/0b97a86f235d10bc4e2a1116eec38e7e
-
-### VSCode extensions broken
-
-1. Remove `~/.vscode/extensions`
-2. Run `make switch-home`
-3. Run `code --list-extensions`
 
 ### Setting global asdf versions
 
