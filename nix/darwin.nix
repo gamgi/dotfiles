@@ -57,6 +57,7 @@
       remapCapsLockToEscape = true;
     };
   };
+  system.primaryUser = "changeme";
   system.defaults.dock.tilesize = 32;
   system.defaults.dock.autohide = true;
 
