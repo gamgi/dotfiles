@@ -38,7 +38,7 @@ uninstall: ## Uninstall
 
 install: install-scripts install-nix install-other  ## Install
 
-setup: setup-nix setup-nix-homemanager ## Setup
+setup: setup-nix setup-nix-homemanager setup-other ## Setup
 
 install-other:
 	# bash prompt with git branch
@@ -46,9 +46,6 @@ install-other:
 	"'/^[^*]/d' -e 's/* \(.*\)/(\\\1)/';" \
 	"} $(TAG)" >> $(BASHRCC_FILE)
 	echo "export PS1=\"\\u@\\h \\[\\\e[32m\\]\\w\\[\\\e[91m\\]\\\$$(parse_git_branch)\\[\\\e[00m\\] $$ \" $(TAG)" >> $(BASHRCC_FILE)
-
-	# set firefox gtk theme
-	# sudo sed -i -- 's/^Exec=firefox %u$$/Exec=bash -c "GTK_THEME=\\" \\" firefox %u"/' /usr/share/applications/firefox.desktop
 
 
 install-nix:
@@ -92,7 +89,6 @@ update-home:
 switch-darwin:
 	./result/sw/bin/darwin-rebuild switch --flake './nix/#$(USER)'
 
-
 setup-nix-darwin:
 	nix build ./nix/#darwinConfigurations.$(USER).system
 	sudo ./result/sw/bin/darwin-rebuild switch --flake './nix/#$(USER)'
@@ -100,6 +96,10 @@ setup-nix-darwin:
 	#may have to do
 	#printf 'run\tprivate/var/run\n' | sudo tee -a /etc/synthetic.conf
 	# /System/Library/Filesystems/apfs.fs/Contents/Resources/apfs.util -t
+
+setup-other:
+	echo "Run the following"
+	echo "sudo scutil --set HostName name-you-want"
 
 install-homebrew:
 	/bin/bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"

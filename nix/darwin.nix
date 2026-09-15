@@ -22,11 +22,8 @@
       "kubectl"
       "kubectx"
       "gh"
-      #"mono"
-      #"websocat" # for up-to-date version
     ];
     casks = [
-      # "iterm2"
       # "hammerspoon"
       # "amethyst"
       # "alfred"

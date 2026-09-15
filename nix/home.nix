@@ -120,6 +120,7 @@
         fix-committer = ''!git filter-branch --commit-filter 'GIT_COMMITTER_NAME="$GIT_AUTHOR_NAME"; GIT_COMMITTER_EMAIL="$GIT_AUTHOR_EMAIL"; GIT_COMMITTER_DATE="$GIT_AUTHOR_DATE"; git commit-tree "$@"' -- $(git merge-base master HEAD)..HEAD'';
 
       };
+      pull.ff = "only";
       includeIf."gitdir:~/code/work/".path = "~/code/work/.gitconfig";
       core.editor = "vim";
     };

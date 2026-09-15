@@ -12,17 +12,17 @@
 2. Install unmanaged software
   - See list of unmanaged software below
   - brew (via sh or .pkg)
-  - xcode (`xcode-select --install`)
+  - xcode CLI (`xcode-select --install`)
   - gcloud to `/Users/changeme/google-cloud-sdk/`
-3. Altern username in `flake.nix`, `Makefile` and so on.
+3. Alter username in `flake.nix`, `Makefile` and so on.
 4. Run `make install`
-5. Run `make setup`
-5.5 Run `make setup-nix-darwin`
+5. Run `make setup` and `make setup-nix-darwin` (requires moving some /etc/ files)
 6. Run `make setup-asdf` (after checking asdf is installed by nix homemanager)
 7. Install firefox plugins, setup bookmarks, add ssh keys.
-8. Run `bash scripts/setup-git`
+8. Run `make switch-darwin` and `make switch-home`
 9. Disable telemetry
-  - gcloud config set disable_usage_reporting false
+  - `gcloud config set disable_usage_reporting false`
+  - `brew analytics off`
 10. Setup uv
   - Run `uv tool install llm` and so on...
 
@@ -81,7 +81,6 @@ A choice has been made to leave the following outside nix.
 * iterm2
 * 1password
 * appstore items (magnet, monosnap, intermission)
-* obsidian
 * docker
 * gcloud
 * slack
