@@ -154,8 +154,7 @@
 
     profileExtra = ''
       eval "$(/opt/homebrew/bin/brew shellenv)";
-      source /Users/changeme/.asdf/installs/rust/nightly/env;
-      source /Users/changeme/.asdf/installs/rust/1.92.0/env;
+      source /Users/pietu/.asdf/installs/rust/*/env;
     '';
 
     initContent = ''
