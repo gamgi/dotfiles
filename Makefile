@@ -84,7 +84,7 @@ news:
 	home-manager news --flake './nix/#$(USER)'
 
 update-home:
-	nix flake update --flake ./nix/flake.nix
+	nix flake update --flake ./nix
 
 switch-darwin:
 	./result/sw/bin/darwin-rebuild switch --flake './nix/#$(USER)'
