@@ -5,7 +5,7 @@
   nixpkgs.overlays = [
     # vim-full fails to build (GRK2 + glib incompatibiliy)
     (final: prev: { vim-full = prev.vim; })
-  ]
+  ];
 
   home.stateVersion = "22.11";
   home.username = "${username}";
