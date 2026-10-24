@@ -66,9 +66,6 @@
     # vale
     cmatrix
     aspell
-    aspellDicts.en
-    aspellDicts.en-computers
-    aspellDicts.en-science
     imagemagick
     # doxygen
     # asdf-vm
