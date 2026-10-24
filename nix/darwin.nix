@@ -60,6 +60,12 @@
 
   nix.package = pkgs.nix;
 
+  # Denylist compromised CA certs
+  security.pki.caCertificateBlacklist = [
+    "Comodo AAA Services root"
+    "emSign ECC Root CA - G3"
+  ];
+
   # Local DNS overrides
   # services.dnsmasq.enable = true;
   # services.dnsmasq.addresses = {
